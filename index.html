@@ -29,16 +29,10 @@
       <p class="text-slate-500 text-sm font-semibold">منظومة معالجة وقياس مخرجات التعلم الأكاديمية</p>
     </header>
 
-    <!-- شريط أدوات الحفظ -->
-    <div class="flex justify-between items-center bg-blue-50 border border-blue-100 rounded-lg p-3 mb-8">
-      <div class="flex items-center gap-2">
-        <span class="text-2xl">💾</span>
-        <div>
-          <p class="text-xs font-bold text-blue-900">الحفظ التلقائي مفعل</p>
-          <p class="text-[10px] text-blue-700">تقدمك محفوظ محلياً في هذا المتصفح بشكل آمن.</p>
-        </div>
-      </div>
-      <button onclick="clearProgress()" class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold px-4 py-2 rounded transition">🗑️ مسح التقدم وبدء مقرر جديد</button>
+    <!-- شريط تأكيد الحفظ التلقائي الآمن (تم حذف زر المسح تماماً لحماية البيانات) -->
+    <div class="flex items-center justify-center gap-2 bg-slate-100 border border-slate-200 rounded-lg p-2.5 mb-8 text-slate-600 shadow-sm">
+      <span class="text-base">🔒</span>
+      <p class="text-xs font-semibold">نظام الحفظ التلقائي مفعل — تُحفظ جميع البيانات والمدخلات محلياً على هذا المتصفح بشكل دائم ومستقل لكل تدريسي.</p>
     </div>
 
     <!-- شريط التنقل -->
@@ -59,11 +53,11 @@
       <div class="grid md:grid-cols-2 lg:grid-cols-6 gap-5">
         <div class="lg:col-span-2">
           <label class="block font-semibold mb-2 text-sm text-slate-700">البرنامج الأكاديمي:</label>
-          <input id="programName" type="text" oninput="saveAutoSave()" class="w-full border border-slate-200 rounded p-2.5 text-sm focus:ring-1 focus:ring-blue-500 bg-slate-50">
+          <input id="programName" type="text" oninput="saveAutoSave()" class="w-full border border-slate-200 rounded p-2.5 text-sm focus:ring-1 focus:ring-blue-500 bg-slate-50" value="بكالوريوس علوم الهندسة الزراعية">
         </div>
         <div class="lg:col-span-2">
           <label class="block font-semibold mb-2 text-sm text-slate-700">اسم المقرر:</label>
-          <input id="courseName" type="text" oninput="saveAutoSave()" class="w-full border border-slate-200 rounded p-2.5 text-sm focus:ring-1 focus:ring-blue-500 bg-slate-50">
+          <input id="courseName" type="text" oninput="saveAutoSave()" class="w-full border border-slate-200 rounded p-2.5 text-sm focus:ring-1 focus:ring-blue-500 bg-slate-50" value="تكنولوجيا صيانة التربة والمياه">
         </div>
         <div class="lg:col-span-2">
           <label class="block font-semibold mb-2 text-sm text-slate-700">طبيعة المقرر:</label>
@@ -112,63 +106,92 @@
       </div>
     </section>
 
-    <!-- باقي الأقسام كما هي (الخطوة 2 إلى 7) مع ربط الحفظ التلقائي -->
-    
-    <!-- الخطوة 2: التنظيم -->
+    <!-- الخطوة 2: التنظيم والترميز -->
     <section id="step-2" class="hidden bg-white rounded-xl card-shadow p-8 space-y-6 border border-slate-100">
       <h2 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-4">التنظيم والترميز الهيكلي للمخرجات</h2>
       <div class="overflow-x-auto rounded border border-slate-200">
         <table class="w-full text-sm">
-          <thead class="bg-slate-100"><tr><th class="w-20">الرمز</th><th>النص المعتمد لمخرج التعلم (CLO)</th><th class="w-20">إجراء</th></tr></thead>
+          <thead class="bg-slate-100">
+            <tr>
+              <th class="w-20">الرمز</th>
+              <th>النص المعتمد لمخرج التعلم (CLO)</th>
+              <th class="w-20">إجراء</th>
+            </tr>
+          </thead>
           <tbody id="organizationBody"></tbody>
         </table>
       </div>
       <div class="flex justify-between items-center pt-2">
-        <button onclick="addCLO()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded text-sm">+ إضافة مخرج تعلم</button>
-        <button onclick="goToStep(3)" class="bg-blue-700 text-white font-bold px-6 py-2 rounded text-sm shadow">اعتماد المخرجات والانتقال ←</button>
+        <button onclick="addCLO()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded text-sm transition">+ إضافة مخرج تعلم</button>
+        <button onclick="goToStep(3)" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-6 py-2 rounded text-sm shadow transition">اعتماد المخرجات والانتقال ←</button>
       </div>
     </section>
 
     <!-- الخطوة 3: المطابقة -->
     <section id="step-3" class="hidden bg-white rounded-xl card-shadow p-8 space-y-6 border border-slate-100">
-      <h2 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-4">جدول المطابقة التفصيلي</h2>
+      <div class="border-b border-slate-100 pb-4">
+        <h2 class="text-xl font-bold text-slate-800">جدول المطابقة التفصيلي</h2>
+        <p class="text-sm text-slate-500 mt-1">يُرجى استخدام القائمة المنسدلة لضمان دقة ربط كل مخرج مقرر مع مخرج البرنامج المناسب.</p>
+      </div>
       <div class="overflow-x-auto rounded border border-slate-200">
         <table class="w-full text-sm">
-          <thead class="bg-slate-100"><tr><th class="w-24">المخرج</th><th class="w-48">يطابق مخرج البرنامج</th><th class="w-32">مستوى التطبيق</th><th>طريقة التدريس</th><th>أداة التقييم</th></tr></thead>
+          <thead class="bg-slate-100">
+            <tr>
+              <th class="w-24">المخرج</th>
+              <th class="w-48">يطابق مخرج البرنامج</th>
+              <th class="w-32">مستوى التطبيق</th>
+              <th>طريقة التدريس</th>
+              <th>أداة التقييم</th>
+            </tr>
+          </thead>
           <tbody id="verticalBody"></tbody>
         </table>
       </div>
       <div class="flex justify-between items-center pt-2">
-        <button onclick="goToStep(2)" class="text-slate-500 font-bold px-4 py-2 text-sm">→ السابق</button>
-        <button onclick="goToStep(4)" class="bg-blue-700 text-white font-bold px-6 py-2 rounded text-sm shadow">الانتقال لمصفوفة التطابق ←</button>
+        <button onclick="goToStep(2)" class="text-slate-500 hover:text-slate-800 font-bold px-4 py-2 text-sm transition">→ السابق</button>
+        <button onclick="goToStep(4)" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-6 py-2 rounded text-sm shadow transition">الانتقال لمصفوفة التطابق ←</button>
       </div>
     </section>
 
     <!-- الخطوة 4: مصفوفة التطابق -->
     <section id="step-4" class="hidden bg-white rounded-xl card-shadow p-8 space-y-6 border border-slate-100">
-      <h2 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-4">مصفوفة التطابق الأفقية</h2>
+      <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+        <h2 class="text-xl font-bold text-slate-800">مصفوفة التطابق الأفقية</h2>
+      </div>
       <div class="overflow-x-auto rounded border border-slate-200">
-        <table id="horizontalTableFinal" class="w-full text-sm bg-white"><thead id="horizontalHead"></thead><tbody id="horizontalBody"></tbody></table>
+        <table id="horizontalTableFinal" class="w-full text-sm bg-white">
+          <thead id="horizontalHead"></thead>
+          <tbody id="horizontalBody"></tbody>
+        </table>
       </div>
       <div class="flex justify-between items-center pt-2">
-        <button onclick="goToStep(3)" class="text-slate-500 font-bold px-4 py-2 text-sm">→ السابق</button>
-        <button onclick="goToStep(5)" class="bg-blue-700 text-white font-bold px-6 py-2 rounded text-sm shadow">الانتقال للقياس والتقييم ←</button>
+        <button onclick="goToStep(3)" class="text-slate-500 hover:text-slate-800 font-bold px-4 py-2 text-sm transition">→ السابق</button>
+        <button onclick="goToStep(5)" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-6 py-2 rounded text-sm shadow transition">الانتقال للقياس والتقييم ←</button>
       </div>
     </section>
 
-    <!-- الخطوة 5: القياس -->
+    <!-- الخطوة 5: القياس والتقييم -->
     <section id="step-5" class="hidden bg-white rounded-xl card-shadow p-8 space-y-6 border border-slate-100">
       <h2 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-4">سجل قياس أداء الطلبة</h2>
       <div class="grid md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded border border-slate-100">
-        <div><label class="block font-bold mb-1 text-sm">نسبة الإنجاز المستهدفة (%):</label><input id="targetLevel" type="number" value="70" onchange="saveAutoSave(); renderGrades();" class="w-full border rounded p-2 text-sm"></div>
-        <div><label class="block font-bold mb-1 text-sm">حجم العينة (عدد الطلبة):</label><input id="numStudents" type="number" value="5" onchange="saveAutoSave(); initGrades(); renderGrades();" class="w-full border rounded p-2 text-sm"></div>
+        <div>
+          <label class="block font-bold mb-1 text-sm text-slate-700">نسبة الإنجاز المستهدفة (%):</label>
+          <input id="targetLevel" type="number" value="70" onchange="saveAutoSave(); renderGrades();" class="w-full border border-slate-200 rounded p-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block font-bold mb-1 text-sm text-slate-700">حجم العينة (عدد الطلبة):</label>
+          <input id="numStudents" type="number" value="5" onchange="saveAutoSave(); initGrades(); renderGrades();" class="w-full border border-slate-200 rounded p-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>
       </div>
       <div class="overflow-x-auto rounded border border-slate-200 mt-4">
-        <table class="w-full text-sm"><thead id="gradesHead"></thead><tbody id="gradesBody"></tbody></table>
+        <table class="w-full text-sm">
+          <thead id="gradesHead"></thead>
+          <tbody id="gradesBody"></tbody>
+        </table>
       </div>
       <div class="flex justify-between items-center pt-2">
-         <button onclick="goToStep(4)" class="text-slate-500 font-bold px-4 py-2 text-sm">→ السابق</button>
-        <button onclick="goToStep(6)" class="bg-blue-700 text-white font-bold px-6 py-2 rounded text-sm shadow">احتساب المؤشرات ←</button>
+         <button onclick="goToStep(4)" class="text-slate-500 hover:text-slate-800 font-bold px-4 py-2 text-sm transition">→ السابق</button>
+        <button onclick="goToStep(6)" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-6 py-2 rounded text-sm shadow transition">احتساب المؤشرات ←</button>
       </div>
     </section>
 
@@ -176,35 +199,80 @@
     <section id="step-6" class="hidden bg-white rounded-xl card-shadow p-8 space-y-6 border border-slate-100">
       <div class="flex items-center justify-between border-b border-slate-100 pb-4">
         <h2 class="text-xl font-bold text-slate-800">مؤشرات الأداء للمقرر الدراسي</h2>
-        <button onclick="exportCourseReport()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded text-sm shadow">تصدير التقرير الفردي (Excel)</button>
+        <button onclick="exportCourseReport()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded text-sm shadow transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          تصدير التقرير الفردي (Excel)
+        </button>
       </div>
-      <div class="overflow-x-auto rounded border border-slate-200 mb-6"><table class="w-full text-sm"><thead id="kpiTableHead"></thead><tbody id="kpiTableBody"></tbody></table></div>
+      
+      <!-- الجدول الأفقي المصغر لنتائج المقرر -->
+      <div class="overflow-x-auto rounded border border-slate-200 mb-6 shadow-sm">
+        <table class="w-full text-sm">
+          <thead id="kpiTableHead" class="bg-slate-50"></thead>
+          <tbody id="kpiTableBody"></tbody>
+        </table>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="border p-4 rounded bg-white shadow-sm"><canvas id="avgChart"></canvas></div>
-        <div class="border p-4 rounded bg-white shadow-sm"><canvas id="targetChart"></canvas></div>
+        <div class="border border-slate-200 p-4 rounded bg-white shadow-sm">
+          <h3 class="text-center font-bold text-slate-600 text-sm mb-4">المتوسط الحسابي لكل مخرج (CLO)</h3>
+          <canvas id="avgChart"></canvas>
+        </div>
+        <div class="border border-slate-200 p-4 rounded bg-white shadow-sm">
+          <h3 class="text-center font-bold text-slate-600 text-sm mb-4">نسبة تحقيق الهدف لكل مخرج (CLO)</h3>
+          <canvas id="targetChart"></canvas>
+        </div>
       </div>
       <div class="flex justify-between items-center pt-4 border-t mt-4">
-         <button onclick="goToStep(5)" class="text-slate-500 font-bold px-4 py-2 text-sm">→ السابق</button>
-        <button onclick="goToStep(7)" class="bg-slate-800 text-amber-400 font-bold px-6 py-2.5 rounded shadow-md text-sm">لوحة الإدارة (التقرير الختامي) ←</button>
+         <button onclick="goToStep(5)" class="text-slate-500 hover:text-slate-800 font-bold px-4 py-2 text-sm transition">→ السابق</button>
+         <button onclick="goToStep(7)" class="bg-slate-800 text-amber-400 font-bold px-6 py-2.5 rounded border border-amber-500 shadow-md text-sm">لوحة الإدارة (التقرير الختامي) ←</button>
       </div>
     </section>
 
-    <!-- الخطوة 7: لوحة الإدارة -->
-    <section id="step-7" class="hidden dashboard-bg rounded-xl card-shadow p-8 space-y-6 border border-slate-700">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-4">
-        <h2 class="text-2xl font-bold text-white">لوحة الإدارة التنفيذية لبرنامج <span id="dashProgramTitle" class="text-cyan-400"></span></h2>
-        <button onclick="exportDashboardReport()" class="bg-amber-500 text-slate-900 font-extrabold px-6 py-2 rounded shadow-lg">تصدير التقرير الختامي للبرنامج</button>
+    <!-- الخطوة 7: لوحة الإدارة (مستقلة تماماً) -->
+    <section id="step-7" class="hidden dashboard-bg rounded-xl card-shadow p-8 space-y-6 border border-slate-700 relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between border-b border-slate-700 pb-4 gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-wide">لوحة الإدارة التنفيذية لبرنامج <span id="dashProgramTitle" class="text-cyan-400"></span></h2>
+          <p class="text-slate-400 text-sm font-semibold mt-1">تجميع وتحليل بيانات الجودة لكافة المقررات الأكاديمية</p>
+        </div>
+        <button onclick="exportDashboardReport()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-extrabold px-6 py-2 rounded shadow-lg transition">
+          تصدير التقرير الختامي للبرنامج
+        </button>
       </div>
+
       <div class="grid md:grid-cols-3 gap-4 bg-slate-800/50 p-6 rounded-lg border border-slate-700">
-        <div><label class="block font-semibold mb-2 text-sm text-slate-300">إجمالي مخرجات البرنامج:</label><input id="dashNumPlos" type="number" min="1" value="12" onchange="saveAutoSave(); initDashboardGrid()" class="w-full dash-input rounded p-2 text-sm"></div>
-        <div><label class="block font-semibold mb-2 text-sm text-slate-300">عدد المقررات:</label><input id="dashCourseCount" type="number" min="1" value="5" onchange="saveAutoSave(); initDashboardGrid()" class="w-full dash-input rounded p-2 text-sm"></div>
-        <div><label class="block font-semibold mb-2 text-sm text-slate-300">نسبة الاستهداف المعتمدة (%):</label><input id="dashTargetLevel" type="number" min="1" value="70" onchange="saveAutoSave(); updateDashboardChart()" class="w-full dash-input rounded p-2 text-sm"></div>
+        <div>
+          <label class="block font-semibold mb-2 text-sm text-slate-300">إجمالي مخرجات البرنامج (PLOs):</label>
+          <input id="dashNumPlos" type="number" min="1" value="12" onchange="saveAutoSave(); initDashboardGrid()" class="w-full dash-input rounded p-2 text-sm">
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-sm text-slate-300">عدد المقررات المراد إدخالها:</label>
+          <input id="dashCourseCount" type="number" min="1" value="5" onchange="saveAutoSave(); initDashboardGrid()" class="w-full dash-input rounded p-2 text-sm">
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-sm text-slate-300">نسبة الاستهداف المعتمدة للبرنامج (%):</label>
+          <input id="dashTargetLevel" type="number" min="1" value="70" onchange="saveAutoSave(); updateDashboardChart()" class="w-full dash-input rounded p-2 text-sm">
+        </div>
       </div>
-      <div class="overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/80">
-        <table class="w-full text-sm"><thead id="dashTableHead" class="bg-slate-900 text-slate-300 border-b border-slate-700"></thead><tbody id="dashTableBody"></tbody></table>
+
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-lg font-bold text-white">جدول الإدخال المركزي</h3>
+          <span class="bg-blue-900/50 text-blue-300 text-xs px-3 py-1 rounded-full border border-blue-700">💡 يمكنك النسخ من إكسل والضغط في أي خلية ولصق البيانات المجمعة مباشرة</span>
+        </div>
+        <div class="overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/80 shadow-inner">
+          <table class="w-full text-sm">
+            <thead id="dashTableHead" class="bg-slate-900 text-slate-300 border-b border-slate-700"></thead>
+            <tbody id="dashTableBody"></tbody>
+          </table>
+        </div>
       </div>
+
       <div class="grid md:grid-cols-2 gap-8 mt-6">
-         <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700"><canvas id="dashPloChart"></canvas></div>
+         <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+          <canvas id="dashPloChart"></canvas>
+        </div>
         <div id="headDecisionBox" class="p-6 rounded-lg border flex flex-col justify-center items-center text-center"></div>
       </div>
     </section>
@@ -219,30 +287,42 @@
     let isDeptHeadUnlocked = false;
     let dashboardData = []; 
 
-    // ---- نظام الحفظ التلقائي ----
+    // ---- نظام الحفظ التلقائي المحلي ----
     function saveAutoSave() {
       const appState = {
         inputs: {
-          programName: document.getElementById('programName').value, courseName: document.getElementById('courseName').value,
-          courseType: document.getElementById('courseType').value, totalYears: document.getElementById('totalYears').value,
-          academicYear: document.getElementById('academicYear').value, numPlos: document.getElementById('numPlos').value,
-          plos: document.getElementById('plos').value, lectures: document.getElementById('lectures').value,
-          targetLevel: document.getElementById('targetLevel').value, numStudents: document.getElementById('numStudents').value,
-          dashNumPlos: document.getElementById('dashNumPlos')?.value, dashCourseCount: document.getElementById('dashCourseCount')?.value, dashTargetLevel: document.getElementById('dashTargetLevel')?.value
+          programName: document.getElementById('programName').value,
+          courseName: document.getElementById('courseName').value,
+          courseType: document.getElementById('courseType').value,
+          totalYears: document.getElementById('totalYears').value,
+          academicYear: document.getElementById('academicYear').value,
+          numPlos: document.getElementById('numPlos').value,
+          plos: document.getElementById('plos').value,
+          lectures: document.getElementById('lectures').value,
+          targetLevel: document.getElementById('targetLevel').value,
+          numStudents: document.getElementById('numStudents').value,
+          dashNumPlos: document.getElementById('dashNumPlos')?.value,
+          dashCourseCount: document.getElementById('dashCourseCount')?.value,
+          dashTargetLevel: document.getElementById('dashTargetLevel')?.value
         },
-        matrixData: matrixData, gradesData: gradesData, dashboardData: dashboardData, isUnlocked: isDeptHeadUnlocked
+        matrixData: matrixData,
+        gradesData: gradesData,
+        dashboardData: dashboardData,
+        isUnlocked: isDeptHeadUnlocked
       };
       localStorage.setItem('QualityApp_SaveData', JSON.stringify(appState));
     }
 
     function loadAutoSave() {
       const saved = localStorage.getItem('QualityApp_SaveData');
-      if(saved) {
+      if (saved) {
         try {
           const appState = JSON.parse(saved);
-          if(appState.inputs) {
+          if (appState.inputs) {
             Object.keys(appState.inputs).forEach(id => {
-              if(document.getElementById(id) && appState.inputs[id]) document.getElementById(id).value = appState.inputs[id];
+              if (document.getElementById(id) && appState.inputs[id] !== undefined) {
+                document.getElementById(id).value = appState.inputs[id];
+              }
             });
           }
           matrixData = appState.matrixData || [];
@@ -250,115 +330,182 @@
           dashboardData = appState.dashboardData || [];
           isDeptHeadUnlocked = appState.isUnlocked || false;
           
-          if(matrixData.length > 0) {
-            for(let i=2; i<=6; i++) document.getElementById('nav-'+i).disabled = false;
-            goToStep(1); // يبدأ من الأولى لكن الأزرار مفعلة
+          if (matrixData.length > 0) {
+            for (let i = 2; i <= 6; i++) {
+              document.getElementById('nav-' + i).disabled = false;
+            }
           }
-        } catch(e) { console.error("Error loading save"); }
+        } catch (e) {
+          console.error("Error loading saved progress:", e);
+        }
       }
     }
-
-    function clearProgress() {
-      if(confirm("هل أنت متأكد من مسح جميع البيانات؟ لا يمكن التراجع عن هذه الخطوة.")) {
-        localStorage.removeItem('QualityApp_SaveData');
-        location.reload();
-      }
-    }
-    // ----------------------------
+    // ------------------------------------
 
     function goToStep(step) {
-      if(matrixData.length === 0 && step > 1 && step !== 7) return alert("يتطلب معالجة البيانات الأساسية أولاً.");
-      if(step === 7 && !isDeptHeadUnlocked) {
-        let pwd = prompt("لوحة الإدارة التنفيذية.\nرمز الوصول:");
-        if(pwd === "1908") {
-          isDeptHeadUnlocked = true;
-          let nav7 = document.getElementById('nav-7'); nav7.innerText = "لوحة الإدارة"; nav7.classList.replace('bg-slate-800', 'bg-amber-500'); nav7.classList.replace('text-amber-400', 'text-slate-900');
-          document.getElementById('dashProgramName').innerText = document.getElementById('programName').value;
-          initDashboardGrid(); saveAutoSave();
-        } else { if(pwd !== null) alert("تم رفض الوصول."); return; }
+      if (matrixData.length === 0 && step > 1 && step !== 7) {
+        return alert("يتطلب معالجة البيانات الأساسية أولاً.");
       }
 
-      for(let i=1; i<=7; i++) {
-        document.getElementById('step-'+i).classList.add('hidden');
-        let btn = document.getElementById('nav-'+i);
-        if(i !== 7 || !isDeptHeadUnlocked) btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-bold bg-white text-slate-500 border border-slate-200";
+      if (step === 7 && !isDeptHeadUnlocked) {
+        let pwd = prompt("لوحة الإدارة التنفيذية.\nرمز الوصول (رئيس القسم / مسؤول البرنامج):");
+        if (pwd === "1908") {
+          isDeptHeadUnlocked = true;
+          let nav7 = document.getElementById('nav-7');
+          nav7.innerText = "لوحة الإدارة";
+          nav7.classList.replace('bg-slate-800', 'bg-amber-500');
+          nav7.classList.replace('text-amber-400', 'text-slate-900');
+          document.getElementById('dashProgramTitle').innerText = document.getElementById('programName').value || "غير محدد";
+          initDashboardGrid();
+          saveAutoSave();
+        } else {
+          if (pwd !== null) alert("تم رفض الوصول.");
+          return;
+        }
+      }
+
+      for (let i = 1; i <= 7; i++) {
+        document.getElementById('step-' + i).classList.add('hidden');
+        let btn = document.getElementById('nav-' + i);
+        if (i !== 7 || !isDeptHeadUnlocked) {
+          btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-bold bg-white text-slate-500 border border-slate-200";
+        }
       }
       
-      document.getElementById('step-'+step).classList.remove('hidden');
-      let activeBtn = document.getElementById('nav-'+step);
-      if(step !== 7) activeBtn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-bold bg-blue-700 text-white shadow";
-      else activeBtn.className = "nav-btn px-5 py-2 rounded-lg text-sm font-extrabold bg-amber-500 text-slate-900 shadow";
+      document.getElementById('step-' + step).classList.remove('hidden');
+      let activeBtn = document.getElementById('nav-' + step);
+      
+      if (step !== 7) {
+        activeBtn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-bold bg-blue-700 text-white shadow";
+      } else {
+        activeBtn.className = "nav-btn px-5 py-2 rounded-lg text-sm font-extrabold bg-amber-500 text-slate-900 shadow";
+      }
 
-      if(step === 2) renderOrganization();
-      if(step === 3) renderVertical();
-      if(step === 4) renderHorizontalMerged();
-      if(step === 5) renderGrades();
-      if(step === 6) renderKPIs();
-      if(step === 7) updateDashboardChart();
+      if (step === 2) renderOrganization();
+      if (step === 3) renderVertical();
+      if (step === 4) renderHorizontalMerged();
+      if (step === 5) renderGrades();
+      if (step === 6) renderKPIs();
+      if (step === 7) updateDashboardChart();
     }
 
     async function submitData() {
       const inputs = {
-        program_name: document.getElementById('programName').value, course_name: document.getElementById('courseName').value,
-        course_type: document.getElementById('courseType').value, academic_year: parseInt(document.getElementById('academicYear').value),
-        total_years: parseInt(document.getElementById('totalYears').value), num_plos: parseInt(document.getElementById('numPlos').value) || 12,
-        program_outcomes: document.getElementById('plos').value, course_description: document.getElementById('lectures').value
+        program_name: document.getElementById('programName').value,
+        course_name: document.getElementById('courseName').value,
+        course_type: document.getElementById('courseType').value,
+        academic_year: parseInt(document.getElementById('academicYear').value),
+        total_years: parseInt(document.getElementById('totalYears').value),
+        num_plos: parseInt(document.getElementById('numPlos').value) || 12,
+        program_outcomes: document.getElementById('plos').value,
+        course_description: document.getElementById('lectures').value
       };
       
       saveAutoSave();
-      let btn = document.getElementById('sendBtn'); btn.disabled = true; btn.querySelector('span').innerText = "تتم المعالجة...";
+      let btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+      btn.innerText = "تتم المعالجة والاستنباط...";
       
       try {
-        // لاحظ تغيير الرابط ليكون نسبياً ليعمل على أي استضافة تلقائياً
         const res = await fetch("/api/generate-matrix", {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(inputs)
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(inputs)
         });
         const data = await res.json();
-        matrixData = data.mapping || []; initGrades(true); saveAutoSave();
-        for(let i=2; i<=6; i++) document.getElementById('nav-'+i).disabled = false;
+        matrixData = data.mapping || [];
+        initGrades(true);
+        saveAutoSave();
+        for (let i = 2; i <= 6; i++) {
+          document.getElementById('nav-' + i).disabled = false;
+        }
         goToStep(2);
-      } catch (err) { alert("حدث خطأ في الاتصال بالخادم."); } 
-      finally { btn.disabled = false; btn.querySelector('span').innerText = "معالجة البيانات"; }
+      } catch (err) {
+        alert("حدث خطأ في الاتصال بالخادم.");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "توليد الجداول وبناء الهيكلية";
+      }
     }
 
-    // وظائف التحديث مع الحفظ
-    function updateVal(idx, field, val) { matrixData[idx][field] = val; saveAutoSave(); }
-    function addCLO() { matrixData.push({ clo: "مخرج جديد", plo_number: 1, level: "I", teaching_method: "محاضرة", assessment_tool: "اختبار" }); initGrades(false); renderOrganization(); saveAutoSave(); }
-    function removeCLO(idx) { if(matrixData.length <= 1) return; matrixData.splice(idx, 1); initGrades(false); renderOrganization(); saveAutoSave(); }
+    function updateVal(idx, field, val) {
+      if (matrixData[idx]) {
+        matrixData[idx][field] = val;
+        saveAutoSave();
+      }
+    }
+
+    function addCLO() {
+      matrixData.push({
+        clo: "مخرج تعلم جديد",
+        plo_number: 1,
+        level: "I",
+        teaching_method: "محاضرة",
+        assessment_tool: "اختبار"
+      });
+      initGrades(false);
+      renderOrganization();
+      saveAutoSave();
+    }
+
+    function removeCLO(idx) {
+      if (matrixData.length <= 1) return alert("الحد الأدنى هو مخرج واحد.");
+      matrixData.splice(idx, 1);
+      initGrades(false);
+      renderOrganization();
+      saveAutoSave();
+    }
 
     function renderOrganization() {
-      const tbody = document.getElementById('organizationBody'); tbody.innerHTML = '';
+      const tbody = document.getElementById('organizationBody');
+      tbody.innerHTML = '';
       matrixData.forEach((row, idx) => {
-        tbody.innerHTML += `<tr class="hover:bg-slate-50"><td class="font-bold text-slate-700 bg-slate-50 w-24">CLO ${idx+1}</td>
-        <td class="text-right editable-cell" contenteditable="true" onblur="updateVal(${idx}, 'clo', this.innerText)">${row.clo}</td>
-        <td class="w-24"><button onclick="removeCLO(${idx})" class="text-red-500 font-bold py-1 px-2 rounded hover:bg-red-50 text-xs">حذف</button></td></tr>`;
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="font-bold text-slate-700 bg-slate-50 w-24">CLO ${idx+1}</td>
+            <td class="text-right" contenteditable="true" onblur="updateVal(${idx}, 'clo', this.innerText)">${row.clo}</td>
+            <td class="w-24"><button onclick="removeCLO(${idx})" class="text-red-500 font-bold py-1 px-2 rounded hover:bg-red-50 text-xs transition">حذف</button></td>
+          </tr>`;
       });
     }
 
     function renderVertical() {
-      const tbody = document.getElementById('verticalBody'); tbody.innerHTML = '';
+      const tbody = document.getElementById('verticalBody');
+      tbody.innerHTML = '';
       const numPlos = parseInt(document.getElementById('numPlos').value) || 12;
+      
       matrixData.forEach((row, idx) => {
-        let ploOptions = ''; for(let i=1; i<=numPlos; i++) ploOptions += `<option value="${i}" ${(parseInt(row.plo_number) === i) ? 'selected' : ''}>PLO ${i}</option>`;
-        tbody.innerHTML += `<tr class="hover:bg-slate-50"><td class="bg-slate-50 font-bold text-slate-700 w-24">CLO ${idx+1}</td>
-        <td class="w-48"><select class="w-full bg-transparent font-bold text-blue-700 text-center outline-none" onchange="updateVal(${idx}, 'plo_number', this.value)">${ploOptions}</select></td>
-        <td class="w-32 editable-cell" contenteditable="true" onblur="updateVal(${idx}, 'level', this.innerText)">${row.level}</td>
-        <td class="editable-cell" contenteditable="true" onblur="updateVal(${idx}, 'teaching_method', this.innerText)">${row.teaching_method}</td>
-        <td class="editable-cell" contenteditable="true" onblur="updateVal(${idx}, 'assessment_tool', this.innerText)">${row.assessment_tool}</td></tr>`;
+        let ploOptions = '';
+        for (let i = 1; i <= numPlos; i++) {
+          ploOptions += `<option value="${i}" ${(parseInt(row.plo_number) === i) ? 'selected' : ''}>PLO ${i}</option>`;
+        }
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="bg-slate-50 font-bold text-slate-700 w-24">CLO ${idx+1}</td>
+            <td class="w-48"><select class="w-full bg-transparent font-bold text-blue-700 text-center outline-none cursor-pointer" onchange="updateVal(${idx}, 'plo_number', this.value)">${ploOptions}</select></td>
+            <td class="w-32 font-medium" contenteditable="true" onblur="updateVal(${idx}, 'level', this.innerText)">${row.level}</td>
+            <td contenteditable="true" onblur="updateVal(${idx}, 'teaching_method', this.innerText)">${row.teaching_method}</td>
+            <td contenteditable="true" onblur="updateVal(${idx}, 'assessment_tool', this.innerText)">${row.assessment_tool}</td>
+          </tr>`;
       });
     }
 
     function renderHorizontalMerged() {
       const numPlos = parseInt(document.getElementById('numPlos').value) || 12;
       let thead = `<tr><th class="min-w-[250px] bg-slate-100 border-b-2">اسم المقرر</th>`;
-      for(let i=1; i<=numPlos; i++) thead += `<th class="bg-slate-100 text-xs w-16">PLO ${i}</th>`;
+      for (let i = 1; i <= numPlos; i++) {
+        thead += `<th class="bg-slate-100 text-xs w-16">PLO ${i}</th>`;
+      }
       document.getElementById('horizontalHead').innerHTML = thead + `</tr>`;
 
-      let matchedCLOs = {}; for(let i=1; i<=numPlos; i++) matchedCLOs[i] = [];
-      matrixData.forEach((row, idx) => { matchedCLOs[parseInt(row.plo_number)]?.push(`CLO ${idx+1}`); });
+      let matchedCLOs = {};
+      for (let i = 1; i <= numPlos; i++) matchedCLOs[i] = [];
+      matrixData.forEach((row, idx) => {
+        matchedCLOs[parseInt(row.plo_number)]?.push(`CLO ${idx+1}`);
+      });
 
-      let tbody = `<tr class="hover:bg-slate-50"><td class="bg-slate-50 font-bold text-blue-900 border-l">${document.getElementById('courseName').value}</td>`;
-      for(let i=1; i<=numPlos; i++) {
+      let tbody = `<tr class="hover:bg-slate-50 transition"><td class="bg-slate-50 font-bold text-blue-900 border-l">${document.getElementById('courseName').value}</td>`;
+      for (let i = 1; i <= numPlos; i++) {
         tbody += `<td class="bg-white">${matchedCLOs[i].length > 0 ? `<span class="text-sm font-bold text-slate-700">${matchedCLOs[i].join(', ')}</span>` : '<span class="text-slate-300">-</span>'}</td>`;
       }
       document.getElementById('horizontalBody').innerHTML = tbody + `</tr>`;
@@ -366,71 +513,106 @@
 
     function initGrades(forceRandom = false) {
       const numStudents = parseInt(document.getElementById('numStudents').value) || 5;
-      while(gradesData.length < numStudents) {
-        let sg = []; matrixData.forEach(() => sg.push(forceRandom ? Math.floor(Math.random() * 41) + 60 : 0)); gradesData.push(sg);
+      while (gradesData.length < numStudents) {
+        let sg = [];
+        matrixData.forEach(() => sg.push(forceRandom ? Math.floor(Math.random() * 41) + 60 : 0));
+        gradesData.push(sg);
       }
-      if(gradesData.length > numStudents) gradesData = gradesData.slice(0, numStudents);
+      if (gradesData.length > numStudents) gradesData = gradesData.slice(0, numStudents);
       gradesData.forEach((sg, i) => {
-        while(sg.length < matrixData.length) sg.push(0);
-        if(sg.length > matrixData.length) gradesData[i] = sg.slice(0, matrixData.length);
+        while (sg.length < matrixData.length) sg.push(0);
+        if (sg.length > matrixData.length) gradesData[i] = sg.slice(0, matrixData.length);
       });
       saveAutoSave();
     }
 
     function renderGrades() {
-      if(gradesData.length === 0 || gradesData[0].length !== matrixData.length) initGrades();
+      if (gradesData.length === 0 || gradesData[0].length !== matrixData.length) initGrades();
       let thead = `<tr><th class="w-32 bg-slate-100 border-b-2">الطالب</th>`;
-      matrixData.forEach((row, idx) => { thead += `<th class="bg-slate-100 border-b-2">CLO ${idx+1}<br><span class="text-xs text-blue-600 font-bold">(PLO ${row.plo_number})</span></th>`; });
+      matrixData.forEach((row, idx) => {
+        thead += `<th class="bg-slate-100 border-b-2">CLO ${idx+1}<br><span class="text-xs text-blue-600 font-bold">(PLO ${row.plo_number})</span></th>`;
+      });
       document.getElementById('gradesHead').innerHTML = thead + `</tr>`;
 
       let tbody = '';
       gradesData.forEach((sg, sIdx) => {
-        tbody += `<tr><td class="bg-slate-50 font-bold text-slate-700 border-l">طالب ${sIdx+1}</td>`;
-        sg.forEach((grade, cIdx) => tbody += `<td><input type="number" value="${grade}" oninput="gradesData[${sIdx}][${cIdx}]=parseFloat(this.value)||0; saveAutoSave();" class="w-full text-center p-1.5 outline-none focus:bg-blue-50"></td>`);
+        tbody += `<tr class="hover:bg-slate-50 transition"><td class="bg-slate-50 font-bold text-slate-700 border-l">طالب ${sIdx+1}</td>`;
+        sg.forEach((grade, cIdx) => {
+          tbody += `<td><input type="number" value="${grade}" oninput="gradesData[${sIdx}][${cIdx}]=parseFloat(this.value)||0; saveAutoSave();" class="w-full text-center p-1.5 outline-none focus:bg-blue-50 rounded font-medium"></td>`;
+        });
         tbody += `</tr>`;
       });
       document.getElementById('gradesBody').innerHTML = tbody;
     }
 
     function renderKPIs() {
-      const numStudents = gradesData.length; const targetLevel = parseInt(document.getElementById('targetLevel').value) || 70;
+      const numStudents = gradesData.length;
+      const targetLevel = parseInt(document.getElementById('targetLevel').value) || 70;
       const numPlos = parseInt(document.getElementById('numPlos').value) || 12;
-      ploPerformance = {}; for(let i=1; i<=numPlos; i++) ploPerformance[i] = { sumPct: 0, count: 0 };
+      ploPerformance = {};
+      for (let i = 1; i <= numPlos; i++) ploPerformance[i] = { sumPct: 0, count: 0 };
       let labels = [], avgData = [], targetData = [];
 
       matrixData.forEach((row, cIdx) => {
         labels.push(`CLO ${cIdx+1}`);
         let achievedCount = 0;
-        for(let sIdx=0; sIdx<numStudents; sIdx++) { if((gradesData[sIdx][cIdx] || 0) >= targetLevel) achievedCount++; }
+        for (let sIdx = 0; sIdx < numStudents; sIdx++) {
+          if ((gradesData[sIdx][cIdx] || 0) >= targetLevel) achievedCount++;
+        }
         let achievedPct = (achievedCount / numStudents) * 100;
-        targetData.push(achievedPct.toFixed(1)); avgData.push(achievedPct.toFixed(1)); 
-        ploPerformance[parseInt(row.plo_number)].sumPct += achievedPct; ploPerformance[parseInt(row.plo_number)].count++;
+        targetData.push(achievedPct.toFixed(1));
+        avgData.push(achievedPct.toFixed(1)); 
+        ploPerformance[parseInt(row.plo_number)].sumPct += achievedPct;
+        ploPerformance[parseInt(row.plo_number)].count++;
       });
 
       let thead = `<tr><th class="min-w-[250px] bg-slate-100 border-b-2">اسم المقرر</th>`;
-      for(let i=1; i<=numPlos; i++) { thead += `<th class="bg-slate-100 text-xs border-b-2 w-16">PLO ${i}</th>`; }
+      for (let i = 1; i <= numPlos; i++) {
+        thead += `<th class="bg-slate-100 text-xs border-b-2 w-16">PLO ${i}</th>`;
+      }
       document.getElementById('kpiTableHead').innerHTML = thead + `</tr>`;
 
-      let tbody = `<tr><td class="bg-slate-50 font-bold text-blue-900 border-l">${document.getElementById('courseName').value}</td>`;
-      for(let i=1; i<=numPlos; i++) {
-          if(ploPerformance[i].count > 0) {
-              let avgPlo = ploPerformance[i].sumPct / ploPerformance[i].count;
-              tbody += `<td class="${avgPlo >= targetLevel ? 'text-emerald-600 font-bold' : 'text-red-600 font-bold'} bg-white">${avgPlo.toFixed(1)}%</td>`;
-          } else { tbody += `<td class="text-slate-300 bg-white">-</td>`; }
+      let tbody = `<tr class="hover:bg-slate-50 transition"><td class="bg-slate-50 font-bold text-blue-900 border-l">${document.getElementById('courseName').value}</td>`;
+      for (let i = 1; i <= numPlos; i++) {
+        if (ploPerformance[i].count > 0) {
+          let avgPlo = ploPerformance[i].sumPct / ploPerformance[i].count;
+          tbody += `<td class="${avgPlo >= targetLevel ? 'text-emerald-600 font-bold' : 'text-red-600 font-bold'} bg-white">${avgPlo.toFixed(1)}%</td>`;
+        } else {
+          tbody += `<td class="text-slate-300 bg-white">-</td>`;
+        }
       }
       document.getElementById('kpiTableBody').innerHTML = tbody + `</tr>`;
 
-      Chart.defaults.font.family = 'Cairo'; charts.forEach(c => c.destroy()); charts = [];
-      charts.push(new Chart(document.getElementById('avgChart').getContext('2d'), { type: 'bar', data: { labels: labels, datasets: [{ label: 'متوسط الدرجات', data: avgData, backgroundColor: '#3b82f6', borderRadius: 4 }] }, options: { scales: { y: { min: 0, max: 100 } } } }));
-      charts.push(new Chart(document.getElementById('targetChart').getContext('2d'), { type: 'line', data: { labels: labels, datasets: [{ label: 'نسبة تحقيق الهدف (%)', data: targetData, borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.2)', fill: true, tension: 0.3 }] }, options: { scales: { y: { min: 0, max: 100 } }, plugins:{ annotation: { annotations: { line1: { type: 'line', yMin: targetLevel, yMax: targetLevel, borderColor: '#ef4444', borderWidth: 2, borderDash: [5, 5] } } } } } }));
+      Chart.defaults.font.family = 'Cairo';
+      charts.forEach(c => c.destroy());
+      charts = [];
+      
+      charts.push(new Chart(document.getElementById('avgChart').getContext('2d'), {
+        type: 'bar',
+        data: { labels: labels, datasets: [{ label: 'متوسط الدرجات', data: avgData, backgroundColor: '#3b82f6', borderRadius: 4 }] },
+        options: { scales: { y: { min: 0, max: 100 } } }
+      }));
+
+      charts.push(new Chart(document.getElementById('targetChart').getContext('2d'), {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'نسبة تحقيق الهدف (%)', data: targetData, borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.2)', fill: true, tension: 0.3 }] },
+        options: {
+          scales: { y: { min: 0, max: 100 } },
+          plugins: { annotation: { annotations: { line1: { type: 'line', yMin: targetLevel, yMax: targetLevel, borderColor: '#ef4444', borderWidth: 2, borderDash: [5, 5] } } } }
+        }
+      }));
     }
 
     function exportCourseReport() {
       const numPlos = parseInt(document.getElementById('numPlos').value) || 12;
-      let headers = ["اسم المقرر"]; for(let i=1; i<=numPlos; i++) headers.push(`PLO ${i}`);
+      let headers = ["اسم المقرر"];
+      for (let i = 1; i <= numPlos; i++) headers.push(`PLO ${i}`);
       let row = [document.getElementById('courseName').value];
-      for(let i=1; i<=numPlos; i++) { row.push(ploPerformance[i] && ploPerformance[i].count > 0 ? `${(ploPerformance[i].sumPct / ploPerformance[i].count).toFixed(1)}%` : "-"); }
-      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["التقرير الفردي للمقرر"], [], headers, row]), "نتائج المقرر");
+      for (let i = 1; i <= numPlos; i++) {
+        row.push(ploPerformance[i] && ploPerformance[i].count > 0 ? `${(ploPerformance[i].sumPct / ploPerformance[i].count).toFixed(1)}%` : "-");
+      }
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["التقرير الفردي لنتائج المقرر"], [], headers, row]), "نتائج المقرر");
       XLSX.writeFile(wb, `تقرير_مقرر_${document.getElementById('courseName').value}.xlsx`);
     }
 
@@ -439,46 +621,47 @@
       const numPlos = parseInt(document.getElementById('dashNumPlos').value) || 12;
       const courseCount = parseInt(document.getElementById('dashCourseCount').value) || 5;
       
-      while(dashboardData.length < courseCount) dashboardData.push({ name: `مقرر ${dashboardData.length + 1}`, plos: {} });
-      if(dashboardData.length > courseCount) dashboardData = dashboardData.slice(0, courseCount);
+      while (dashboardData.length < courseCount) dashboardData.push({ name: `مقرر ${dashboardData.length + 1}`, plos: {} });
+      if (dashboardData.length > courseCount) dashboardData = dashboardData.slice(0, courseCount);
 
       let thead = `<tr><th class="min-w-[250px] p-3 border-slate-700 bg-slate-900 text-slate-300">اسم المقرر</th>`;
-      for(let i=1; i<=numPlos; i++) thead += `<th class="w-16 p-3 border-slate-700 bg-slate-900 text-xs">PLO ${i}</th>`;
+      for (let i = 1; i <= numPlos; i++) thead += `<th class="w-16 p-3 border-slate-700 bg-slate-900 text-xs">PLO ${i}</th>`;
       document.getElementById('dashTableHead').innerHTML = thead + `</tr>`;
 
       let tbody = '';
       dashboardData.forEach((course, rIdx) => {
-          tbody += `<tr class="hover:bg-slate-800/80 transition">
-            <td class="p-1.5 border-slate-700"><input type="text" value="${course.name}" oninput="dashboardData[${rIdx}].name = this.value; saveAutoSave();" onpaste="handleGridPaste(event, ${rIdx}, 0)" class="w-full dash-input rounded p-2 font-bold text-sm"></td>`;
-          for(let cIdx=1; cIdx<=numPlos; cIdx++) {
-              let val = course.plos[cIdx] !== undefined ? course.plos[cIdx] : "";
-              tbody += `<td class="p-1.5 border-slate-700"><input type="text" value="${val}" oninput="dashboardData[${rIdx}].plos[${cIdx}] = this.value; saveAutoSave(); updateDashboardChart();" onpaste="handleGridPaste(event, ${rIdx}, ${cIdx})" class="w-full dash-input rounded p-2 text-sm font-semibold"></td>`;
-          }
-          tbody += `</tr>`;
+        tbody += `<tr class="hover:bg-slate-800/80 transition">
+          <td class="p-1.5 border-slate-700"><input type="text" value="${course.name}" oninput="dashboardData[${rIdx}].name = this.value; saveAutoSave();" onpaste="handleGridPaste(event, ${rIdx}, 0)" class="w-full dash-input rounded p-2 font-bold text-sm"></td>`;
+        for (let cIdx = 1; cIdx <= numPlos; cIdx++) {
+          let val = course.plos[cIdx] !== undefined ? course.plos[cIdx] : "";
+          tbody += `<td class="p-1.5 border-slate-700"><input type="text" value="${val}" oninput="dashboardData[${rIdx}].plos[${cIdx}] = this.value; saveAutoSave(); updateDashboardChart();" onpaste="handleGridPaste(event, ${rIdx}, ${cIdx})" class="w-full dash-input rounded p-2 text-sm font-semibold"></td>`;
+        }
+        tbody += `</tr>`;
       });
       document.getElementById('dashTableBody').innerHTML = tbody;
-      saveAutoSave(); updateDashboardChart();
+      saveAutoSave();
+      updateDashboardChart();
     }
 
     function handleGridPaste(e, startRow, startCol) {
-        e.preventDefault();
-        const numPlos = parseInt(document.getElementById('dashNumPlos').value) || 12;
-        let text = (e.originalEvent || e).clipboardData.getData('text/plain');
-        let rows = text.split(/\r\n|\n|\r/);
-        
-        for(let i=0; i<rows.length; i++) {
-            if(rows[i].trim() === '') continue;
-            let cells = rows[i].split('\t');
-            let targetR = startRow + i;
-            if(targetR >= dashboardData.length) break;
+      e.preventDefault();
+      const numPlos = parseInt(document.getElementById('dashNumPlos').value) || 12;
+      let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      let rows = text.split(/\r\n|\n|\r/);
+      
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].trim() === '') continue;
+        let cells = rows[i].split('\t');
+        let targetR = startRow + i;
+        if (targetR >= dashboardData.length) break;
 
-            for(let j=0; j<cells.length; j++) {
-                let targetC = startCol + j;
-                if(targetC === 0) dashboardData[targetR].name = cells[j].trim();
-                else if (targetC <= numPlos) dashboardData[targetR].plos[targetC] = cells[j].trim().replace(/[^0-9.]/g, ''); 
-            }
+        for (let j = 0; j < cells.length; j++) {
+          let targetC = startCol + j;
+          if (targetC === 0) dashboardData[targetR].name = cells[j].trim();
+          else if (targetC <= numPlos) dashboardData[targetR].plos[targetC] = cells[j].trim().replace(/[^0-9.]/g, ''); 
         }
-        initDashboardGrid(); 
+      }
+      initDashboardGrid(); 
     }
 
     function updateDashboardChart() {
@@ -486,39 +669,67 @@
       const targetLevel = parseInt(document.getElementById('dashTargetLevel').value) || 70;
       let ploLabels = [], ploData = [], totalSum = 0, totalCount = 0;
 
-      for(let i=1; i<=numPlos; i++) {
-          ploLabels.push(`PLO ${i}`);
-          let sum = 0, count = 0;
-          dashboardData.forEach(course => { let val = parseFloat(course.plos[i]); if(!isNaN(val)) { sum += val; count++; } });
-          if(count > 0) { let avg = sum / count; ploData.push(avg.toFixed(1)); totalSum += avg; totalCount++; } 
-          else { ploData.push(0); }
+      for (let i = 1; i <= numPlos; i++) {
+        ploLabels.push(`PLO ${i}`);
+        let sum = 0, count = 0;
+        dashboardData.forEach(course => {
+          let val = parseFloat(course.plos[i]);
+          if (!isNaN(val)) { sum += val; count++; }
+        });
+        if (count > 0) {
+          let avg = sum / count;
+          ploData.push(avg.toFixed(1));
+          totalSum += avg;
+          totalCount++;
+        } else {
+          ploData.push(0);
+        }
       }
 
       let overallSuccess = totalCount > 0 ? (totalSum / totalCount) : 0;
-      let existingChart = Chart.getChart('dashPloChart'); if (existingChart) existingChart.destroy();
-      new Chart(document.getElementById('dashPloChart'), { type: 'bar', data: { labels: ploLabels, datasets: [{ label: 'متوسط أداء البرنامج (%)', data: ploData, backgroundColor: '#0ea5e9', borderRadius: 4 }] }, options: { scales: { y: { min: 0, max: 100, grid: {color: 'rgba(255,255,255,0.05)'}, ticks: {color: '#94a3b8'} }, x:{ grid: {display: false}, ticks: {color: '#94a3b8'} } }, plugins: { legend: { labels: { color: '#f8fafc', font: { family: 'Cairo' } } }, annotation: { annotations: { line1: { type: 'line', yMin: targetLevel, yMax: targetLevel, borderColor: '#fbbf24', borderWidth: 2, borderDash: [5,5] } } } } } });
+      let existingChart = Chart.getChart('dashPloChart');
+      if (existingChart) existingChart.destroy();
+      new Chart(document.getElementById('dashPloChart'), {
+        type: 'bar',
+        data: { labels: ploLabels, datasets: [{ label: 'متوسط أداء البرنامج (%)', data: ploData, backgroundColor: '#0ea5e9', borderRadius: 4 }] },
+        options: {
+          scales: {
+            y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+          },
+          plugins: {
+            legend: { labels: { color: '#f8fafc', font: { family: 'Cairo' } } },
+            annotation: { annotations: { line1: { type: 'line', yMin: targetLevel, yMax: targetLevel, borderColor: '#fbbf24', borderWidth: 2, borderDash: [5, 5] } } }
+          }
+        }
+      });
 
       let decisionBox = document.getElementById('headDecisionBox');
-      if(overallSuccess >= targetLevel) {
+      if (overallSuccess >= targetLevel) {
         decisionBox.className = "p-8 rounded-lg border bg-emerald-900/30 border-emerald-500/50 flex flex-col justify-center items-center text-center shadow-inner";
-        decisionBox.innerHTML = `<h3 class="text-xl font-bold text-emerald-400 mb-2">الأداء العام: مطابق</h3><p class="text-slate-300 text-sm">متوسط الإنجاز الكلي للبرنامج ${overallSuccess.toFixed(1)}%.</p>`;
+        decisionBox.innerHTML = `<div class="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center text-white text-3xl mb-4 shadow-lg shadow-emerald-500/30">✓</div><h3 class="text-2xl font-bold text-emerald-400 mb-2">الأداء العام: مطابق</h3><p class="text-slate-300 text-sm">متوسط الإنجاز الكلي للبرنامج ${overallSuccess.toFixed(1)}%، وهو يفوق المستوى المستهدف.</p>`;
       } else {
         decisionBox.className = "p-8 rounded-lg border bg-red-900/30 border-red-500/50 flex flex-col justify-center items-center text-center shadow-inner";
-        decisionBox.innerHTML = `<h3 class="text-xl font-bold text-red-400 mb-2">الأداء العام: دون المستهدف</h3><p class="text-slate-300 text-sm">متوسط الإنجاز الكلي للبرنامج ${overallSuccess.toFixed(1)}%.</p>`;
+        decisionBox.innerHTML = `<div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white text-3xl mb-4 shadow-lg shadow-red-500/30">!</div><h3 class="text-2xl font-bold text-red-400 mb-2">الأداء العام: دون المستهدف</h3><p class="text-slate-300 text-sm">متوسط الإنجاز الكلي للبرنامج ${overallSuccess.toFixed(1)}% وهو دون المستوى المستهدف (${targetLevel}%).</p>`;
       }
     }
 
     function exportDashboardReport() {
       const numPlos = parseInt(document.getElementById('dashNumPlos').value) || 12;
-      let headers = ["اسم المقرر"]; for(let i=1; i<=numPlos; i++) headers.push(`PLO ${i}`);
+      let headers = ["اسم المقرر"];
+      for (let i = 1; i <= numPlos; i++) headers.push(`PLO ${i}`);
       let excelData = [ ["التقرير التنفيذي الشامل للبرنامج الأكاديمي"], [], headers ];
       
       dashboardData.forEach(course => {
-          let row = [course.name];
-          for(let i=1; i<=numPlos; i++) { let val = parseFloat(course.plos[i]); row.push(isNaN(val) ? "-" : `${val}%`); }
-          excelData.push(row);
+        let row = [course.name];
+        for (let i = 1; i <= numPlos; i++) {
+          let val = parseFloat(course.plos[i]);
+          row.push(isNaN(val) ? "-" : `${val}%`);
+        }
+        excelData.push(row);
       });
-      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(excelData), "نتائج البرنامج");
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(excelData), "نتائج البرنامج");
       XLSX.writeFile(wb, `التقرير_النهائي_للبرنامج.xlsx`);
     }
   </script>
