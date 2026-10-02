@@ -3,6 +3,7 @@ import json
 import re
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from groq import Groq
 
@@ -28,9 +29,13 @@ class CourseData(BaseModel):
     program_outcomes: str
     course_description: str
 
+# هذا السطر يجعل بايثون يفتح صفحة index.html فوراً عند زيارة الرابط
+@app.get("/")
+async def read_index():
+    return FileResponse("index.html")
+
 @app.post("/api/generate-matrix")
 async def generate_matrix(data: CourseData):
-    # خوارزمية تحديد المخرجات الأكاديمية
     if data.course_type == "supportive":
         target_clos = 3
         clo_rule = "يحدد بـ 3 مخرجات تعلم (CLOs) كحد أقصى"
